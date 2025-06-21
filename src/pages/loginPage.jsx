@@ -61,10 +61,10 @@ export default function LoginPage(){
                     loading?"Loading...":"Login"
                 }
                 </button>
-                <p className="text-gray-600 text-center m-[10px]">
+                <p className="text-gray-100 text-center m-[10px]">
                     Don't have an account yet?
                     &nbsp;         
-                    <span className="text-green-500 cursor-pointer hover:text-green-800">
+                    <span className="text-green-700 cursor-pointer hover:text-green-200">
                         <Link to={"/register"}>Register Now </Link> 
                     </span>
 
