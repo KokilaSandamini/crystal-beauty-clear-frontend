@@ -1,10 +1,12 @@
 import { BiTrash } from "react-icons/bi"
-import getCart, { addToCart, removeFromCart } from "../../utils/cart"
+import getCart, { addToCart, getTotal, getTotalForLabeledPrice, removeFromCart } from "../../utils/cart"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function CartPage(){
     const [cartLoaded , setCartLoaded] = useState(false)
     const [cart , setCart] = useState([])
+    const navigate = useNavigate();
     useEffect(()=>{
         if(cartLoaded == false){
             const cart = getCart()
@@ -48,13 +50,37 @@ export default function CartPage(){
                                     setCartLoaded(false)
                                 }}> + </button>
                             </div>
-                            <div className="h-full w-[100px] flex justify-center items-center">
-                                <h1 className="text-xl">{(item.price * item.quantity).toFixed(2)}</h1>
-                            </div>
+                            <div className="h-full w-[100px]  flex justify-center items-center">
+                                <h1 className="text-xl w-full text-end pr-2">{(item.price * item.quantity).toFixed(2)}</h1>
+                            </div> 
                         </div>
                     )
                 })
             }
+            <div className="w-full flex justify-end">
+                <h1 className="w-[100px] text-xl text-end pr-2">Total</h1>
+                <h1 className="w-[100px] text-xl text-end pr-2">{getTotalForLabeledPrice().toFixed(2)}</h1>    
+            </div>
+            <div className="w-full flex justify-end">
+                <h1 className="w-[100px] text-xl text-end pr-2">Discount</h1>
+                <h1 className="w-[100px] text-xl border-b-[2px] text-end pr-2 ">{(getTotalForLabeledPrice()-getTotal()).toFixed(2)}</h1>                
+            </div>
+            <div className="w-full flex justify-end">
+                <h1 className="w-[100px] text-xl text-end pr-2">Net Total</h1>
+                <h1 className="w-[100px] text-xl border-b-[4px] border-double text-end pr-2">{getTotal().toFixed(2)}</h1>     
+            </div>
+            <div className="w-full flex justify-end mt-4">
+                <button className="w-[170px] text-xl text-center shadow pr-2 bg-pink-400 text-white h-[40px] rounded-lg cursor-pointer"onClick={()=>{
+                 navigate("/checkout",
+                    {
+                        state : {
+                            items : cart
+                        }
+                    }
+                 )
+                }}>Checkout
+                </button>
+            </div>
         </div>
     
     </div>
