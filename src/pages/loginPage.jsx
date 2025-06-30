@@ -104,6 +104,12 @@ export default function LoginPage() {
                         </span>
 
                     </p>
+                    <p className="text-gray-100 text-center m-[10px]">
+                        Forget your password? &nbsp;
+                        <span className="text-green-700 cursor-pointer hover:text-green-200">
+                            <Link to={"/forget"}>Reset Password</Link>
+                        </span>
+                    </p>
                 </div>
             </div>
         </div>

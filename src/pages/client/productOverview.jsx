@@ -38,74 +38,73 @@ export default function ProductOverview() {
     )
     return (
         <div className="w-full h-full">
-            {
-                status == "loading" && <Loader />
-            }
-            {
-                status == "loaded" &&
-                <div className="w-full h-full flex">
-                    <div className="w-[50%] h-full ">
-                        {console.log(product)}
-                        <ImageSlider images={product.images} />
-                    </div>
-                    <div className="w-[50%] h-full bg-blue-100 p-[40px]">
-                        <h1 className="text-3xl font-bold text-center mb-[40px]">{product.name}{" | "}<span className="text-2xl font-semibold text-center text-gray-500">{product.altNames.join(" | ")}
+            {status == "loading" && <Loader />}
+            {status == "loaded" && (
+                    <div className="w-full h-full flex flex-col lg:flex-row">
+                        <h1 className="text-3xl lg:hidden font-bold text-center mb-[40px]">{product.name}{" | "}<span className="text-2xl font-semibold text-center text-gray-500">{product.altNames.join(" | ")}
                             </span></h1>
-                        
-                            
-                        
-                        <div className="w-full flex justify-center mb-[40px]">
-                            {product.labeledPrice > product.price ? (
-                                <>
-                                    <h2 className="text-2xl mr-[20px]">LKR: {product.price.toFixed(2)}</h2>
-                                    <h2 className="text-2xl line-through text-gray-500">
-                                        LKR: {product.labeledPrice.toFixed(2)}
-                                    </h2>
-                                </>
-                            ) : (
-                                <h2 className="text-2xl mr-[20px]">{product.price}</h2>
-                            )}
+                        <div className="w-full lg:h-full lg:w-[50%]  ">
+                            {console.log(product)}
+                            <ImageSlider images={product.images} />
                         </div>
-                        <p className="text-xl text-center text-gray-500 mb-[40px]">
-                            {product.description}
-                        </p>
-                        <div className="w-full flex justify-center mb-[40px]">
-                            <button className="bg-pink-800 border cursor-pointer border-pink-800 text-white w-[200px] h-[50px] rounded-lg hover:bg-white hover:text-pink-800 transition-all duration-300 ease-in-out"
-                            onClick={
-                                ()=>{
-                                    addToCart(product, 1)
-                                    toast.success("Product added to cart")
-                                    console.log(getCart())
-                                }
-                                }>
-                                Add to Cart
-                            </button>
-                            <button 
-                            onClick={()=>{
-                                navigate("/checkout",{
-                                    state : {
-                                        items : [
-                                            {
-                                                productID : product.productID,
-                                                name : product.name,
-                                                altNames : product.altNames,
-                                                price : product.price,
-                                                labeledPrice : product.labeledPrice,
-                                                image : product.images[0],
-                                                quantity : 1
-                                            }
-                                        ]
-                                    }
-                                
-                                })
-                            }}
-                                className="bg-pink-800 border cursor-pointer border-pink-800 text-white w-[200px] h-[50px] rounded-lg hover:bg-white hover:text-pink-800 transition-all duration-300 ease-in-out ml-[20px]">
-                                Buy Now
-                            </button>
+                        <div className="w-full lg:w-[50%] pt-[100px] h-full p-[40px] ">
+                            <h1 className="hidden lg:block justify-center text-3xl font-bold text-center mb-[40px]">{product.name}{" | "}<span className="text-2xl font-semibold text-center text-gray-500">{product.altNames.join(" | ")}
+                            </span></h1>
+
+
+
+                            <div className="w-full flex justify-center mb-[40px]">
+                                {product.labeledPrice > product.price ? (
+                                    <>
+                                        <h2 className="text-2xl mr-[20px]">LKR: {product.price.toFixed(2)}</h2>
+                                        <h2 className="text-2xl line-through text-gray-500">
+                                            LKR: {product.labeledPrice.toFixed(2)}
+                                        </h2>
+                                    </>
+                                ) : (
+                                    <h2 className="text-2xl mr-[20px]">{product.price}</h2>
+                                )}
                             </div>
+                            <p className="text-xl text-center text-gray-500 mb-[40px]">
+                                {product.description}
+                            </p>
+                            <div className="w-full flex justify-center mb-[40px]">
+                                <button className="bg-pink-800 border cursor-pointer border-pink-800 text-white w-[200px] h-[50px] rounded-lg hover:bg-white hover:text-pink-800 transition-all duration-300 ease-in-out"
+                                    onClick={
+                                        () => {
+                                            addToCart(product, 1)
+                                            toast.success("Product added to cart")
+                                            console.log(getCart())
+                                        }
+                                    }>
+                                    Add to Cart
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        navigate("/checkout", {
+                                            state: {
+                                                items: [
+                                                    {
+                                                        productID: product.productID,
+                                                        name: product.name,
+                                                        altNames: product.altNames,
+                                                        price: product.price,
+                                                        labeledPrice: product.labeledPrice,
+                                                        image: product.images[0],
+                                                        quantity: 1
+                                                    }
+                                                ]
+                                            }
+
+                                        })
+                                    }}
+                                    className="bg-pink-800 border cursor-pointer border-pink-800 text-white w-[200px] h-[50px] rounded-lg hover:bg-white hover:text-pink-800 transition-all duration-300 ease-in-out ml-[20px]">
+                                    Buy Now
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            }
+                )}
             {
                 status == "error" &&
                 <div>
